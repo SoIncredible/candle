@@ -64,24 +64,20 @@ namespace FiniteStateMachine.Core
 
         protected virtual void SetGlobalParam(GlobalParamType globalParamType, IBaseGlobalStateParam param)
         {
-            if (!_globalParamDic.TryGetValue(globalParamType, out var value))
+            if (_globalParamDic.TryGetValue(globalParamType, out var value))
             {
-                _globalParamDic.Add(globalParamType, param);
+                if (value == param)
+                {
+                    return;
+                }
 
-                if (value != null)
-                {
-                    Debug.LogWarning(
-                        $"[BaseFiniteStateMachine] GlobalParamDic has had this key-value pair: key-[{globalParamType}, value-[{value}]");
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        $"[BaseFiniteStateMachine] the {globalParamType}'s value in GlobalParamDic is null!");
-                }
+                _globalParamDic[globalParamType] = param;
+                Debug.LogWarning(
+                    $"[BaseFiniteStateMachine] the {globalParamType}'s value in GlobalParamDic has been changed! before:{value} now:{param}");
             }
             else
             {
-                _globalParamDic[globalParamType] = param;
+                _globalParamDic.Add(globalParamType, param);
             }
         }
 
