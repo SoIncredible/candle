@@ -1,5 +1,6 @@
 using FiniteStateMachine.Core;
 using FiniteStateMachine.PlayerFSM.PlayerState;
+using UnityEngine;
 
 namespace FiniteStateMachine.PlayerFSM
 {
@@ -19,6 +20,8 @@ namespace FiniteStateMachine.PlayerFSM
 
             // 初始化状态
             StateTypeDic.TryGetValue(StateType.Idle, out CurState);
+
+            Debug.Log("111");
         }
     }
 }
