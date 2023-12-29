@@ -22,6 +22,7 @@ namespace FiniteStateMachine.PlayerFSM
             StateTypeDic.TryGetValue(StateType.Idle, out CurState);
 
             Debug.Log("111");
+            Debug.Log("222");
         }
     }
 }
