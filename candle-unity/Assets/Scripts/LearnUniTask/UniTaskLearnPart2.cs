@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using Effect;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ namespace LearnUniTask
         [SerializeField] private Button clearBtn;
         [SerializeField] private TextMeshProUGUI logText;
 
+        [SerializeField] private ShakeText shakeText;
+
         private void Awake()
         {
             delayFrameBtn.onClick.AddListener(OnClickDelayFrameBtn);
@@ -24,16 +27,22 @@ namespace LearnUniTask
 
         private async void OnClickDelayFrameBtn()
         {
-            DebugExt.Log($"开始测试DelayFrame,当前帧{Time.frameCount}", logText);
+            // TODO 完善打字机效果
+            // TODO 将打字动画的协程转换为UniTask
+            var text = DebugExt.Log($"开始测试DelayFrame,当前帧{Time.frameCount}", logText);
+            StartCoroutine(shakeText.Print(text));
             await UniTask.DelayFrame(5);
-            DebugExt.Log($"DelayFrame测试结束，当前帧{Time.frameCount}", logText);
+            var text1 = DebugExt.Log($"DelayFrame测试结束,当前帧{Time.frameCount}", logText);
+            // StartCoroutine(shakeText.Print(text1));
         }
 
         private async void OnClickDelaySecondBtn()
         {
-            DebugExt.Log($"开始测试DelaySecond,当前时间{Time.time}", logText);
+            var text = DebugExt.Log($"开始测试DelaySecond,当前时间{Time.time}", logText);
+            StartCoroutine(shakeText.Print(text));
             await UniTask.Delay(TimeSpan.FromSeconds(1));
-            DebugExt.Log($"DelaySecond测试结束，当前时间{Time.time}", logText);
+            var text1 = DebugExt.Log($"DelaySecond测试结束,当前时间{Time.time}", logText);
+            StartCoroutine(shakeText.Print(text1));
         }
 
         private void OnClickClearBtn()

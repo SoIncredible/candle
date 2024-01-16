@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class DebugExt : Debug
 {
-    public static void Log(string message, TextMeshProUGUI textMeshProUGUI)
+    public static string Log(string message, TextMeshProUGUI textMeshProUGUI)
     {
-        textMeshProUGUI.text += "\n" + message;
+        // textMeshProUGUI.text += "\n" + message;
         Log(message);
+        return "\n" + message;
     }
 }
