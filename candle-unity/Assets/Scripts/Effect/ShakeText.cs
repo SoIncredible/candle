@@ -8,7 +8,7 @@ namespace Effect
     public class ShakeText : MonoBehaviour
     {
         public TMP_Text destination; //输出处
-        [Range(0, .05f)] public float shakeAmount = 0.25f; //抖动幅度
+        [Range(0, .05f)] public float shakeAmount = 0.75f; //抖动幅度
         [Range(1, 10)] public float speed = 10f; //抖动速度
         private bool _isUp = true; //上下抖动标志
         private int _currentLineNumber; //记录当前行号

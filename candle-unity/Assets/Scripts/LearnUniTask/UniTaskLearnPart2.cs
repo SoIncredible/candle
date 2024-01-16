@@ -28,22 +28,22 @@ namespace LearnUniTask
         private async void OnClickDelayFrameBtn()
         {
             delayFrameBtn.enabled = false;
-            var text = DebugExt.Log($"开始测试DelayFrame,当前帧{Time.frameCount}", logText);
-            await shakeText.Print(text);
+            var startText = DebugExt.Log($"开始测试DelayFrame,当前帧{Time.frameCount}", logText);
+            await shakeText.Print(startText);
             await UniTask.DelayFrame(5);
-            var text1 = DebugExt.Log($"DelayFrame测试结束,当前帧{Time.frameCount}", logText);
-            await shakeText.Print(text1);
+            var endText = DebugExt.Log($"DelayFrame测试结束,当前帧{Time.frameCount}", logText);
+            await shakeText.Print(endText);
 
             delayFrameBtn.enabled = true;
         }
 
         private async void OnClickDelaySecondBtn()
         {
-            var text = DebugExt.Log($"开始测试DelaySecond,当前时间{Time.time}", logText);
-            // StartCoroutine(shakeText.Print(text));
+            var startText = DebugExt.Log($"开始测试DelaySecond,当前时间{Time.time}", logText);
+            await shakeText.Print(startText);
             await UniTask.Delay(TimeSpan.FromSeconds(1));
-            var text1 = DebugExt.Log($"DelaySecond测试结束,当前时间{Time.time}", logText);
-            // StartCoroutine(shakeText.Print(text1));
+            var endText = DebugExt.Log($"DelaySecond测试结束,当前时间{Time.time}", logText);
+            await shakeText.Print(endText);
         }
 
         private void OnClickClearBtn()
