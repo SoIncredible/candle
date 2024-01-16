@@ -19,7 +19,6 @@ namespace Effect
             _oldIndex = 0;
         }
 
-        // TODO 实现基于 上一次的文本结尾的打字机效果
         public async UniTask Print(string text)
         {
             for (int i = _oldIndex; i < text.Length; i++)
