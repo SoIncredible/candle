@@ -27,27 +27,29 @@ namespace LearnUniTask
 
         private async void OnClickDelayFrameBtn()
         {
-            // TODO 完善打字机效果
-            // TODO 将打字动画的协程转换为UniTask
+            delayFrameBtn.enabled = false;
             var text = DebugExt.Log($"开始测试DelayFrame,当前帧{Time.frameCount}", logText);
-            StartCoroutine(shakeText.Print(text));
+            await shakeText.Print(text);
             await UniTask.DelayFrame(5);
             var text1 = DebugExt.Log($"DelayFrame测试结束,当前帧{Time.frameCount}", logText);
-            // StartCoroutine(shakeText.Print(text1));
+            await shakeText.Print(text1);
+
+            delayFrameBtn.enabled = true;
         }
 
         private async void OnClickDelaySecondBtn()
         {
             var text = DebugExt.Log($"开始测试DelaySecond,当前时间{Time.time}", logText);
-            StartCoroutine(shakeText.Print(text));
+            // StartCoroutine(shakeText.Print(text));
             await UniTask.Delay(TimeSpan.FromSeconds(1));
             var text1 = DebugExt.Log($"DelaySecond测试结束,当前时间{Time.time}", logText);
-            StartCoroutine(shakeText.Print(text1));
+            // StartCoroutine(shakeText.Print(text1));
         }
 
         private void OnClickClearBtn()
         {
             logText.text = string.Empty;
+            shakeText.ResetIndex();
         }
     }
 }

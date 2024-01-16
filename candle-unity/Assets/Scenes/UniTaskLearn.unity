@@ -1886,7 +1886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 256088186}
   shakeAmount: 0.25
-  speed: 5
+  speed: 1
 --- !u!1 &1037629472
 GameObject:
   m_ObjectHideFlags: 0

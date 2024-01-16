@@ -1,4 +1,5 @@
-using System.Collections;
+using System;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -8,24 +9,34 @@ namespace Effect
     {
         public TMP_Text destination; //输出处
         [Range(0, .05f)] public float shakeAmount = 0.25f; //抖动幅度
-        [Range(1, 10)] public float speed = 5f; //抖动速度
+        [Range(1, 10)] public float speed = 10f; //抖动速度
         private bool _isUp = true; //上下抖动标志
         private int _currentLineNumber; //记录当前行号
+        private int _oldIndex;
 
-
-        public IEnumerator Print(string text)
+        private void Start()
         {
-            for (int i = 0; i < text.Length; i++)
+            _oldIndex = 0;
+        }
+
+        // TODO 实现基于 上一次的文本结尾的打字机效果
+        public async UniTask Print(string text)
+        {
+            for (int i = _oldIndex; i < text.Length; i++)
             {
-                string res = $"<color=white>{text.Substring(0, i)}</color>";
-                res += i == text.Length - 1
-                    ? $"<color=white><size=0.25>{text[i]}</size></color>"
-                    : $"<color=red><size=0.25>{text[i]}</size></color>"; //实现高亮打字机效果
+                string res = text.Substring(0, i + 1);
+                // string res = $"<color=white>{text.Substring(0, i)}</color>";
+                // res += i;
+                // res += i == text.Length - 1
+                //     ? $"<color=white><size=0.25>{text[i]}</size></color>"
+                //     : $"<color=red><size=0.25>{text[i]}</size></color>"; //实现高亮打字机效果
                 destination.text = res;
                 ShakeChar();
                 _isUp = !_isUp; //上下抖动标识更新
-                yield return new WaitForSeconds(1 / speed);
+                await UniTask.Delay(TimeSpan.FromSeconds(1 / speed));
             }
+
+            _oldIndex = text.Length;
         }
 
         private void ShakeChar()
@@ -54,6 +65,11 @@ namespace Effect
                 currentMesh.mesh.vertices = currentMesh.vertices;
                 destination.UpdateGeometry(currentMesh.mesh, i);
             }
+        }
+
+        public void ResetIndex()
+        {
+            _oldIndex = 0;
         }
     }
 }
