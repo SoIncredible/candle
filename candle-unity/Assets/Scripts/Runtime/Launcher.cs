@@ -1,4 +1,5 @@
 using System.Collections;
+using UI.UIFramework.Core.Runtime;
 using UnityEngine;
 
 namespace Runtime
@@ -10,6 +11,8 @@ namespace Runtime
             GameManager.Create();
             yield return null;
             GameManager.Instance.Init();
+            yield return null;
+            GameManager.Instance.UIManager.OpenPage(UIType.Home);
         }
     }
 }
