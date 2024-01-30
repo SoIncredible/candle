@@ -24,8 +24,13 @@ namespace UI.UIFramework.Core.Editor
             go.AddComponent<Canvas>();
             go.AddComponent<GraphicRaycaster>();
 
+            var go1 = new GameObject("True UI");
+            go1.transform.SetParent(go.transform);
+            go1.AddComponent<RectTransform>().NormalizeRectTransform();
+            go1.AddComponent<Image>();
+
             string path = AssetDatabase.GUIDToAssetPath(selectedFolders[0]);
-            PrefabUtility.SaveAsPrefabAsset(go, $"{path}/{go.name}.prefab", out var success);
+            PrefabUtility.SaveAsPrefabAsset(go1, $"{path}/{go1.name}.prefab", out var success);
             Object.DestroyImmediate(go);
             AssetDatabase.Refresh();
             if (success)
