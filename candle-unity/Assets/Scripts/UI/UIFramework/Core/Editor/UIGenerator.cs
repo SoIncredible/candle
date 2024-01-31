@@ -7,7 +7,7 @@ namespace UI.UIFramework.Core.Editor
     public static class UIGenerator
     {
         [MenuItem("Assets/CandleUI/CreateCandleUI", false, 4000)]
-        public static void CreateCandleUI()
+        public static void CreateCandleUI() 
         {
             string[] selectedFolders = Selection.assetGUIDs;
 
@@ -17,21 +17,22 @@ namespace UI.UIFramework.Core.Editor
                 return;
             }
 
-            var go = new GameObject("CandleTemplateUI");
-            var rectTransform = go.AddComponent<RectTransform>();
+            // canvasNode只是用来辅助生成CandleUI的，在CandleUI生成完成后会自动删除 CandleUI的Prefab中不会有Canvas组件
+            var canvasNode = new GameObject("CandleCanvas");
+            var rectTransform = canvasNode.AddComponent<RectTransform>();
             rectTransform.NormalizeRectTransform();
 
-            go.AddComponent<Canvas>();
-            go.AddComponent<GraphicRaycaster>();
+            canvasNode.AddComponent<Canvas>();
+            canvasNode.AddComponent<GraphicRaycaster>();
 
-            var go1 = new GameObject("True UI");
-            go1.transform.SetParent(go.transform);
-            go1.AddComponent<RectTransform>().NormalizeRectTransform();
-            go1.AddComponent<Image>();
+            var uiRoot = new GameObject("CandleTemplateUI");
+            uiRoot.transform.SetParent(canvasNode.transform);
+            uiRoot.AddComponent<RectTransform>().NormalizeRectTransform();
+            uiRoot.AddComponent<Image>();
 
             string path = AssetDatabase.GUIDToAssetPath(selectedFolders[0]);
-            PrefabUtility.SaveAsPrefabAsset(go1, $"{path}/{go1.name}.prefab", out var success);
-            Object.DestroyImmediate(go);
+            PrefabUtility.SaveAsPrefabAsset(uiRoot, $"{path}/{uiRoot.name}.prefab", out var success);
+            Object.DestroyImmediate(canvasNode);
             AssetDatabase.Refresh();
             if (success)
             {
