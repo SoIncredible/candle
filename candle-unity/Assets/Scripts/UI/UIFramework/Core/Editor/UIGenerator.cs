@@ -1,13 +1,15 @@
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Directory = UnityEngine.Windows.Directory;
 
 namespace UI.UIFramework.Core.Editor
 {
     public static class UIGenerator
     {
         [MenuItem("Assets/CandleUI/CreateCandleUI", false, 4000)]
-        public static void CreateCandleUI() 
+        public static void CreateCandleUI()
         {
             string[] selectedFolders = Selection.assetGUIDs;
 
@@ -55,5 +57,36 @@ namespace UI.UIFramework.Core.Editor
         }
 
         // TODO 生成UI引用脚本
+        // TODO 支持基于UniTask的异步操作
+        private const string CandleUIGenPath = "Gen";
+        private const string CandleUIPath = "Gen/UI";
+
+        [MenuItem("Assets/CandleUI/CreateCandleBaseUI", false, 4000)]
+        public static void GenerateCandleBaseUI()
+        {
+            string[] selection = Selection.assetGUIDs;
+
+            // TODO 支持批量生成BaseUI
+            if (selection.Length != 1)
+            {
+                Debug.LogError("[CandleUIGenerator]: 请选择正确的CandleUI！！！");
+                return;
+            }
+
+            var uiGenPath = Path.Combine(Application.dataPath, CandleUIGenPath);
+            var uiPath = Path.Combine(Application.dataPath, CandleUIPath);
+            if (!Directory.Exists(uiGenPath))
+            {
+                Directory.CreateDirectory(uiGenPath);
+                Directory.CreateDirectory(uiPath);
+            }
+            else
+            {
+                if (!Directory.Exists(uiPath))
+                {
+                    Directory.CreateDirectory(uiPath);
+                }
+            }
+        }
     }
 }
